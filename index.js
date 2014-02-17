@@ -11,6 +11,11 @@ function BarChart (selector) {
   makeDivChart(selector, data);
 }
 
+/**
+ * Makes a bar chart based on DIVs
+ * @param  {String} selector CSS selector string
+ * @param  {Array} data Array of data
+ */
 function makeDivChart (selector, data) {
   // map from data space (domain (4-42)) to display space (range 
   // (px)).
