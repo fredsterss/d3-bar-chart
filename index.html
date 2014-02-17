@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3 Bar Chart.</title>
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script src="build/build.js"></script>
+    <script>
+      var barChart = require("d3-bar-chart");
+      barChart(document.getElementById("chart"));
+    </script>
+  </body>
+</html>
