@@ -71,7 +71,7 @@ BarChart.prototype.makeVerticalSvgChart = function (data) {
       .data(data)
     .enter().append("rect")
       .attr("fill", function (d, i) {
-        return "rgb(150," + Math.floor(i * 255 / data.length) + ",170)"; })
+        return "rgb(200," + Math.floor(i * 170 / data.length) + ",50)"; })
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.name); })
       .attr("width", x.rangeBand())
