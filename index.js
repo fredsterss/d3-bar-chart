@@ -16,6 +16,13 @@ function BarChart (selector) {
   return this;
 }
 
+/**
+ * create vertical SVG chart with data
+ * @param  {Array} data
+ *   @property {String} name
+ *   @property {Number} value
+ * @return {BarChart}
+ */
 BarChart.prototype.makeVerticalSvgChart = function (data) {
   var width = 960
     , height = 500
@@ -44,6 +51,8 @@ BarChart.prototype.makeVerticalSvgChart = function (data) {
     .attr("y", function(d) { return y(d.value) + 3; })
     .attr("dy", ".75em")
     .text(function(d) { return d.name; });
+
+  return this;
 }
 
 /**
@@ -82,6 +91,8 @@ BarChart.prototype.makeSvgChart = function (data) {
       .attr("y", barHeight / 2)
       .attr("dy", ".35em")
       .text(function (d) { return d.value; });
+
+  return this;
 }
 
 /**
@@ -116,4 +127,6 @@ BarChart.prototype.makeDivChart = function (data) {
       .style("width", function (d) { return x(d) + "px"; })
       // set text of bar to a function of bound data
       .text(function (d) { return d; });
+
+  return this;
 }
