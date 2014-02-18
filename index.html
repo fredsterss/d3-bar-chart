@@ -16,8 +16,18 @@
     <svg class="chart"></svg>
     <script src="build/build.js"></script>
     <script>
-      var barChart = require("d3-bar-chart");
-      barChart(".chart");
+      var bc = require("d3-bar-chart")
+        , barChart = bc(".chart")
+        , dataMd = [
+            { name: "Locke", value: 4 },
+            { name: "Reyes", value: 8 },
+            { name: "Ford", value: 15 },
+            { name: "Jarrah", value: 16 },
+            { name: "Shephard", value: 23 },
+            { name: "Kwon", value: 42 }
+        ];
+
+      barChart.makeVerticalSvgChart(dataMd);
     </script>
   </body>
 </html>

@@ -5,29 +5,52 @@ var d3 = require('d3');
  */
 module.exports = BarChart;
 
+/**
+ * BarChart instance
+ * @param {string} css selector string, ie. ".class"
+ */
 function BarChart (selector) {
   if (!(this instanceof BarChart)) return new BarChart(selector);
-  var data = [4, 8, 15, 16, 23, 42];
+  this.selector = selector;
 
-  var dataMD = [
-    { name: "Locke", value: 4 },
-    { name: "Reyes", value: 8 },
-    { name: "Ford", value: 15 },
-    { name: "Jarrah", value: 16 },
-    { name: "Shephard", value: 23 },
-    { name: "Kwon", value: 42 }
-  ];
+  return this;
+}
 
-  // makeDivChart(selector, data);
-  makeSvgChart(selector, dataMD);
+BarChart.prototype.makeVerticalSvgChart = function (data) {
+  var width = 960
+    , height = 500
+    , barWidth = width / data.length;
+
+  var y = d3.scale.linear()
+      .domain([0, d3.max(data, function(d) { return d.value; })])
+      .range([height, 0]);
+
+  var chart = d3.select(this.selector)
+      .attr("width", width)
+      .attr("height", height);
+
+  var bar = chart.selectAll("g")
+        .data(data)
+      .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+
+  bar.append("rect")
+    .attr("y", function(d) { return y(d.value); })
+    .attr("height", function(d) { return height - y(d.value); })
+    .attr("width", barWidth -1);
+
+  bar.append("text")
+    .attr("x", barWidth / 2)
+    .attr("y", function(d) { return y(d.value) + 3; })
+    .attr("dy", ".75em")
+    .text(function(d) { return d.name; });
 }
 
 /**
  * Makes an SVG Chart
- * @param  {String} selector css selector string
  * @param  {Array} data      graph dataz
  */
-function makeSvgChart (selector, data) {
+BarChart.prototype.makeSvgChart = function (data) {
   var width = 420
     , barHeight = 20;
 
@@ -37,7 +60,7 @@ function makeSvgChart (selector, data) {
       .range([0, width]);
 
   // select chart container and set width and height
-  var chart = d3.select(selector)
+  var chart = d3.select(this.selector)
       .attr("width", width)
       .attr("height", barHeight * data.length);
 
@@ -63,10 +86,9 @@ function makeSvgChart (selector, data) {
 
 /**
  * Makes a bar chart based on DIVs
- * @param  {String} selector CSS selector string
  * @param  {Array} data Array of data
  */
-function makeDivChart (selector, data) {
+BarChart.prototype.makeDivChart = function (data) {
   // map from data space (domain (4-42)) to display space (range 
   // (px)).
   // this is a function that returns the scaled display value 
@@ -76,7 +98,7 @@ function makeDivChart (selector, data) {
       .range([0, 420]);
 
   // select chart container
-  d3.select(selector)
+  d3.select(this.selector)
     // define the elements we 'want' to exist using data joins:
     // "Thinking with joins means declaring a relationship 
     // between a selection (such as "circle") and data, and 
